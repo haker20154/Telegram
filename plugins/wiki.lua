@@ -107,7 +107,7 @@ function Wikipedia:wikintro(text, lang)
       return text
     end
   else
-    return "Sorry an error happened"
+    return "متاسفم مشکلی پیش آمده"
   end
 end
 
@@ -123,7 +123,7 @@ function Wikipedia:wikisearch(text, lang)
 	 titles = titles ~= "" and titles or "No results found"
 	 return titles
   else
-    return "Sorry, an error occurred"
+    return "متاسفم مشکلی پیش آمده"
   end
 
 end
