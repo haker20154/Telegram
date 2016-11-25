@@ -35,7 +35,7 @@ local function qr(receiver, text, color, bgcolor)
   local response, code, headers = http.request(url)
 
   if code ~= 200 then
-    return "خطا " .. code
+    return "Oops! Error: " .. code
   end
 
   if #response > 0 then
@@ -43,7 +43,7 @@ local function qr(receiver, text, color, bgcolor)
 	return
 
   end
-  return "خطا"
+  return "Oops! Something strange happened :("
 end
 
 local function run(msg, matches)
@@ -65,15 +65,15 @@ end
 return {
   description = {"qr code plugin for telegram, given a text it returns the qr code"},
   usage = {
-    "!qr [text]",
-    '!qr "[background color]" "[data color]" [text]\n'
+    "qrcode [text]",
+    'qrcode "[background color]" "[data color]" [text]\n'
       .."Color through text: red|green|blue|purple|black|white|gray\n"
       .."Colors through hex notation: (\"a56729\" is brown)\n"
       .."Or colors through decimals: (\"255-192-203\" is pink)"
   },
   patterns = {
-    '^!qr "(%w+)" "(%w+)" (.+)$',
-    "^!qr (.+)$"
+    '^[Qq]rcode "(%w+)" "(%w+)" (.+)$',
+    "^[Qq]rcode (.+)$"
   },
   run = run
 }

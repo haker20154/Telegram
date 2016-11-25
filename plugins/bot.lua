@@ -17,13 +17,13 @@ local function enable_channel(receiver)
 	end
 
 	if _config.disabled_channels[receiver] == nil then
-		return 'Channel isn\'t disabled'
+		return 'ربات خاموش نمی باشد 🚀'
 	end
 	
 	_config.disabled_channels[receiver] = false
 
 	save_config()
-	return "Channel re-enabled"
+	return "ربات روشن شد 🚀"
 end
 
 local function disable_channel( receiver )
@@ -34,21 +34,22 @@ local function disable_channel( receiver )
 	_config.disabled_channels[receiver] = true
 
 	save_config()
-	return "Channel disabled"
+	return "ربات خاموش شد 😴"
 end
 
 local function pre_process(msg)
 	local receiver = get_receiver(msg)
 	
-	-- If sender is sudo then re-enable the channel
-	if is_sudo(msg) then
-	  if msg.text == "!channel enable" then
+	-- If sender is moderator then re-enable the channel
+	--if is_sudo(msg) then
+	if is_momod(msg) then
+	  if msg.text:lower() == "#bot on" or msg.text:lower() == "/bot on"or msg.text:lower() == "!bot on" then
 	    enable_channel(receiver)
 	  end
 	end
 
   if is_channel_disabled(receiver) then
-  	msg.text = ""
+  	msg.text = "ربات روشن شد 🚀"
   end
 
 	return msg
@@ -57,11 +58,11 @@ end
 local function run(msg, matches)
 	local receiver = get_receiver(msg)
 	-- Enable a channel
-	if matches[1] == 'enable' then
+	if matches[1]:lower() == 'on' then
 		return enable_channel(receiver)
 	end
 	-- Disable a channel
-	if matches[1] == 'disable' then
+	if matches[1]:lower() == 'off' then
 		return disable_channel(receiver)
 	end
 end
@@ -72,9 +73,10 @@ return {
 		"!channel enable: enable current channel",
 		"!channel disable: disable current channel" },
 	patterns = {
-		"^!channel? (enable)",
-		"^!channel? (disable)" }, 
+		"^[!#/][Bb]ot? ([Oo]n)",
+		"^[!#/][Bb]ot? ([Oo]ff)",}, 
 	run = run,
+	--privileged = true,
 	privileged = true,
 	pre_process = pre_process
 }
